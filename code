@@ -770,3 +770,199 @@ class Solution {
         return arr;
     }
 }
+
+// Stack
+class Solution {
+    public int calPoints(String[] operations) {
+        Stack<Integer>stk= new Stack<>();
+        for(String s :operations){
+            if(s.equals("C"))stk.pop();
+            else if(s.equals("D")){
+                int d =stk.peek();
+
+                stk.push(2*d);
+            }
+            else if (s.equals("+")){
+                int a = stk.pop();
+                int b= stk.peek();
+                stk.push(a);
+                stk.push(a+b);
+            }
+            else {
+                stk.push(Integer.parseInt(s));
+            }
+        }int sum = 0; for (int x : stk) { sum += x; } return sum;
+        
+    }
+}
+class Solution {
+    public boolean isValid(String s) {
+        Stack<Character> stk = new Stack<>();
+        for(char ch :s.toCharArray()){
+            if(ch=='('||ch=='['||ch=='{') stk.push(ch);
+            else{
+               if(stk.isEmpty()) return false;
+                char top =stk.pop();
+                if( (ch=='}' && top !='{') ||
+                (ch==']' && top !='[') ||
+                (ch==')' && top !='(') )return false;
+            }
+        }
+       return stk.isEmpty();
+    }
+}
+class Solution {
+    public int evalRPN(String[] tokens) {
+      Stack<Integer> stk = new Stack<>();
+      for(String x:tokens){
+        if(x.equals("+")){
+            int a=stk.pop();
+            int b=stk.pop();
+            stk.push(a+b);
+        }
+        else if(x.equals("-")){
+            int a=stk.pop();
+            int b=stk.pop();
+            stk.push(b-a);
+        }
+        else if(x.equals("*")){
+            int a=stk.pop();
+            int b=stk.pop();
+            stk.push(a*b);
+        }
+        else if(x.equals("/")){
+            int a=stk.pop();
+            int b=stk.pop();
+            stk.push(b/a);
+        }
+        else{
+            stk.push(Integer.parseInt(x));
+        }
+      }  
+      return stk.peek();
+    }
+}
+class Solution {
+    public int[] asteroidCollision(int[] asteroids) {
+        Stack<Integer> stk = new Stack<>();
+        for(int x:asteroids){
+           boolean isalive =true;
+           while(x<0 &&!stk.isEmpty()  && isalive && stk.peek()>0){
+            if(stk.peek() < -x){
+                stk.pop();
+            }
+            else if(stk.peek() == -x){
+                stk.pop();
+                isalive=false;
+            }
+            else{
+                isalive=false;
+            }
+           }
+           if(isalive)stk.push(x);
+        }
+        int[]arr = new int[stk.size()];
+        int idx=0;
+        for(int x: stk){
+            arr[idx++]=x;
+        }
+        return arr;
+    }
+}
+class Solution {
+    public int[] dailyTemperatures(int[] temperatures) {
+        int n = temperatures.length;
+        Stack<Integer> stk = new Stack<>();
+        int [] nge = new int [n];
+        for(int i=n-1;i>=0;i--){
+            while(!stk.isEmpty() && temperatures[stk.peek()]<=temperatures[i])stk.pop();
+            if(stk.isEmpty())nge[i]=0;
+            else nge[i]=stk.peek()-i;
+            stk.push(i);
+        }
+        return nge;
+    }
+}
+class Solution {
+    public String simplifyPath(String path) {
+        String [] parts = path.split("/");
+        Stack<String> stk = new Stack<>();
+        for(String s : parts){
+            if(s.equals("") || s.equals("."))continue;
+            else if (s.equals("..")){
+                if(!stk.isEmpty()){
+                    stk.pop();
+                }
+            }
+            else stk.push(s);
+        }
+        String ans="";
+        for(String s : stk){
+            ans+= "/"+s;
+        }
+        return ans.isEmpty()?"/":ans;
+    }
+}
+
+class Solution {
+    public String decodeString(String s) {
+        Stack<String> stk = new Stack<>();
+        Stack<Integer> num =new Stack<>();
+        int no=0;
+        String str="";
+        for(char ch :s.toCharArray()){
+            if(Character.isDigit(ch)){
+                no = no*10 + ch-'0';
+            }
+            else if(ch=='['){
+                stk.push(str);
+                num.push(no);
+                no=0;
+                str="";
+            }
+            else if(ch==']'){
+                int k = num.pop();
+                String prev = stk.pop();
+                String temp="";
+                for(int i=0;i<k;i++){
+                    temp+=str;
+                }
+              str= prev+temp;
+            }
+            else str+=ch;
+        }
+        return str;
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

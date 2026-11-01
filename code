@@ -118,6 +118,55 @@ class Solution {
     }
 }
 
+class MyHashSet {
+    boolean set[];
+    public MyHashSet() {
+        set = new boolean[1000001];
+    }
+    
+    public void add(int key) {
+        set[key]=true;
+    }
+    
+    public void remove(int key) {
+        set[key]=false;
+    }
+    
+    public boolean contains(int key) {
+        return set[key];
+    }
+}
+
+
+class MyHashMap {
+    int map[];
+    public MyHashMap() {
+        map= new int [1000001];
+        Arrays.fill(map,-1);
+    }
+    
+    public void put(int key, int value) {
+        map[key]=value;
+    }
+    
+    public int get(int key) {
+        return map[key];
+    }
+    
+    public void remove(int key) {
+        map[key]=-1;
+    }
+}
+
+/**
+ * Your MyHashMap object will be instantiated and called as such:
+ * MyHashMap obj = new MyHashMap();
+ * obj.put(key,value);
+ * int param_2 = obj.get(key);
+ * obj.remove(key);
+ */
+
+
 class Solution {
     public int[] sortArray(int[] nums) {
         mergesort(nums,0,nums.length-1);

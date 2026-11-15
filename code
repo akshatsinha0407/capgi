@@ -863,6 +863,97 @@ class Solution {
        return stk.isEmpty();
     }
 }
+
+class MyStack {
+    Queue<Integer> q= new LinkedList<>();
+    public MyStack() {
+        
+    }
+    
+    public void push(int x) {
+        q.add(x);
+        int size=q.size();
+        while(size>1){
+            q.add(q.remove());
+            size--;
+        }
+    }
+    
+    public int pop() {
+     return   q.remove();
+    }
+    
+    public int top() {
+        return q.peek();
+    }
+    
+    public boolean empty() {
+        return q.isEmpty();
+    }
+}
+class MyQueue {
+
+    Stack<Integer> in = new Stack<>();
+    Stack<Integer> op =new Stack<>();
+    public MyQueue() {
+        
+    }
+    
+    public void push(int x) {
+        in.push(x);
+    }
+    
+    public int pop() {
+        shift();
+        return op.pop();
+    }
+    
+    public int peek() {
+        shift();
+        return op.peek();
+    }
+    
+    public boolean empty() {
+        return in.isEmpty() && op.isEmpty();
+    }
+    public void shift(){
+        if(op.isEmpty()){
+            while(!in.isEmpty()){
+                op.push(in.pop());
+            }
+        }
+    }
+}
+class MinStack {
+    Stack<Integer> stk = new Stack<>();
+    Stack<Integer> min = new Stack<>();
+
+    public MinStack() {
+        
+    }
+    
+    public void push(int value) {
+    stk.push(value);
+    if(min.isEmpty()||value<=min.peek()){
+        min.push(value);
+    }    
+    }
+    
+    public void pop() {
+        int pop =stk.pop();
+        if(pop==min.peek()){
+            min.pop();
+        }
+    }
+    
+    public int top() {
+        return stk.peek();
+    }
+    
+    public int getMin() {
+        return min.peek();
+    }
+}
 class Solution {
     public int evalRPN(String[] tokens) {
       Stack<Integer> stk = new Stack<>();

@@ -39,3 +39,84 @@ class Solution {
         return pq.peek();
     }
 }
+
+class Solution {
+    public int[][] kClosest(int[][] points, int k) {
+
+        PriorityQueue<int[]> pq = new PriorityQueue<>(
+            (a,b) -> (b[0]*b[0] + b[1]*b[1]) -
+                     (a[0]*a[0] + a[1]*a[1])
+        );
+
+        for(int[] arr : points) {
+            pq.offer(arr);
+
+            if(pq.size() > k) {
+                pq.poll();
+            }
+        }
+
+        int[][] ans = new int[k][];
+
+        for(int i = 0; i < k; i++) {
+            ans[i] = pq.poll();
+        }
+
+        return ans;
+    }
+}
+
+class Solution {
+    public int findKthLargest(int[] nums, int k) {
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
+        for(int x: nums){
+            pq.offer(x);
+            if(pq.size()>k)pq.poll();
+        }
+        return pq.peek();
+    }
+}
+
+
+class Solution {
+    public int leastInterval(char[] tasks, int n) {
+
+        int[] freq = new int[26];
+
+        for(char ch : tasks) {
+            freq[ch-'A']++;
+        }
+
+        PriorityQueue<Integer> pq =
+            new PriorityQueue<>(Collections.reverseOrder());
+
+        for(int f : freq) {
+            if(f > 0) pq.offer(f);
+        }
+
+        Queue<int[]> q = new LinkedList<>();
+
+        int time = 0;
+
+        while(!pq.isEmpty() || !q.isEmpty()) {
+
+            time++;
+
+            if(!pq.isEmpty()) {
+                int count = pq.poll();
+
+                count--;
+
+                if(count > 0) {
+                    q.offer(new int[]{count, time+n});
+                }
+            }
+
+            if(!q.isEmpty() && q.peek()[1] == time) {
+                pq.offer(q.poll()[0]);
+            }
+        }
+
+        return time;
+    }
+}

@@ -1258,9 +1258,64 @@ class Solution {
     }
 }
 
+class Solution {
+    public boolean search(int[] nums, int target) {
+        int l=0, r=nums.length-1;
+        while(l<=r){
+            int mid= l+(r-l)/2;
+            if(nums[mid]==target)return true;
+            if(nums[mid]==nums[l] && nums[mid]==nums[r]){
+                l++;
+                r--;
+            }
+            else if(nums[l]<=nums[mid]){
+                if(nums[l]<=target && nums[mid]>=target){
+                    r=mid-1;
+                }
+                else l=mid+1;
+            }
+            else{
+                if(nums[r]>=target && nums[mid]<=target){
+                    l=mid+1;
+                }
+                else r=mid-1;
+            }
+        }
+        return false;
+    }
+}
 
-
-
+class Solution {
+    public int splitArray(int[] nums, int k) {
+        int i=0,j=0;
+        for(int x:nums){
+            i=Math.max(i,x);
+            j+=x;
+        }
+        int ans=i;
+        while(i<=j){
+            int mid = i +(j-i)/2;
+            if(canSplit(nums, mid ,k)){
+                ans=mid;
+                j=mid-1;
+            }
+            else i=mid+1;
+        }
+        return ans;
+    }
+    public boolean canSplit(int []nums,int cansum ,int tgt){
+        int cnt=1;
+        int sum=0;
+        for(int x:nums){
+            if(sum+x > cansum){
+                cnt++;
+                sum=x;
+            }
+            else sum+=x;
+        }
+        return cnt<=tgt;
+    }
+}
 
 
 
